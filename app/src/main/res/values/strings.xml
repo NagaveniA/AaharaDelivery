@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">AaharaDelivery</string>
+
+    <string name="restaurant_name">Roll Planet</string>
+    <string name="location">Ballari</string>
+
+    <string name="items">ITEMS</string>
+    <string name="item_name">Paneer</string>
+    <string name="ordered_on">Ordered On</string>
+    <string name="date">24 Dec 2019 at 6:36 PM</string>
+    <string name="total_amt">Total Amount</string>
+    <string name="amt">117.00</string>
+    <string name="delivered_and_ordered">Delivered and Rated</string>
+    <string name="repeat_order">Repeat Order</string>
+    <string name="closed">Closed For Delivery</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <style name="DropdownText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/textSize_12sp</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+</resources>
