@@ -1,7 +1,6 @@
 package com.example.aaharadelivery.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.aaharadelivery.Home;
+import com.example.aaharadelivery.HomeActivity;
 import com.example.aaharadelivery.Interface.AlertDailog;
 import com.example.aaharadelivery.Model.DeliveryBean;
 import com.example.aaharadelivery.R;
@@ -37,8 +36,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
    private List<DeliveryBean.Order> deliveryBeanList = new ArrayList<>(  );
     AlertDailog mcallBack;
     ArrayAdapter<String>  dataAdapter;
-    Home home;
-    public HistoryAdapter(Context context, List<DeliveryBean.Order> deliveryBeanList, AlertDailog mcallBack,Home home) {
+    HomeActivity home;
+    public HistoryAdapter(Context context, List<DeliveryBean.Order> deliveryBeanList, AlertDailog mcallBack, HomeActivity home) {
         this.context = context;
         this.deliveryBeanList = deliveryBeanList;
         this.mcallBack = mcallBack;
@@ -118,6 +117,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item,orderList);
             dataAdapter.setDropDownViewResource( android.R.layout.simple_spinner_item );
             orderSpinnar.setAdapter( dataAdapter );
+            orderSpinnar.setSelection(0,false);
             orderSpinnar.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

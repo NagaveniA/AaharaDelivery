@@ -60,15 +60,7 @@ public class History extends AppCompatActivity  {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_history );
 
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView Title = (TextView) findViewById( R.id.your_orders );
-        TextView mTitle = (TextView) findViewById( R.id.history );
-*/
         rvHistory = (RecyclerView) findViewById(R.id.rv_history);
-      /*  rvOrderDropDown = (RecyclerView)findViewById( R.id.rv_order_dropdown );
-        ivOrderExpand = (ImageView)findViewById( R.id.iv_order_expand ) ;
-        tvOrderSpinner = (TextView)findViewById( R.id.tv_order_spinner) ;
-        rlSpinnerProject = (RelativeLayout)findViewById( R.id.rl_spinner_project );*/
         initializeRecycler();
         //initOrderRecycler();
 
@@ -146,7 +138,7 @@ public class History extends AppCompatActivity  {
                 @Override
                 public void onClick(View v) {
                     alertDialog.dismiss();
-                    Home.this.finish();
+                    HomeActivity.this.finish();
                 }
             });
 *//*

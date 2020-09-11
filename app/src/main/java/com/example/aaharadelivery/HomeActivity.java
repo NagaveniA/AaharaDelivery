@@ -41,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Home extends AppCompatActivity implements AlertDailog, View.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements AlertDailog, View.OnClickListener {
 
 
     private boolean isExpandedOrderList = true;
@@ -72,80 +72,48 @@ public class Home extends AppCompatActivity implements AlertDailog, View.OnClick
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_home );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
 
-        session = new UserSessionManager( getApplicationContext() );
-        accesss_token = session.getUserDetails().get( UserSessionManager.KEY_accessToken );
-         Log.d("accesss_token",accesss_token.toString());
+        session = new UserSessionManager(getApplicationContext());
+        accesss_token = session.getUserDetails().get(UserSessionManager.KEY_accessToken);
+        Log.d("accesss_token", accesss_token.toString());
 
-        rvHistory = (RecyclerView) findViewById( R.id.rv_history );
-        tvHistory = (TextView) findViewById( R.id.history );
+        rvHistory = (RecyclerView) findViewById(R.id.rv_history);
+        tvHistory = (TextView) findViewById(R.id.history);
 
-        tvHistory.setOnClickListener( this );
-        //   initializeRecycler();
-        //initOrderRecycler();
+        tvHistory.setOnClickListener(this);
 
         callApi();
 
     }
 
-
-
-
-
-   /* private void initializeRecycler() {
-        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-
-        rvHistory.setLayoutManager(layoutManager);
-        historyModelArrayList.add(new HistoryModel("Roll Planet","Ballari",
-                "1 × Paneer Roll,1 × Veggie Roll,1 × Paneer Roll","24 Dec 2019 at 6:36 PM","₹117.00","Address","available"));
-        historyModelArrayList.add(new HistoryModel("Roll Planet","Ballari",
-                "1 × Paneer Roll,1 × Veggie Roll,1 × Paneer Roll","24 Dec 2019 at 6:36 PM","₹117.00","Address","available"));
-        historyModelArrayList.add(new HistoryModel("Roll Planet","Ballari",
-                "1 × Paneer Roll,1 × Veggie Roll,1 × Paneer Roll","24 Dec 2019 at 6:36 PM","₹117.00","Address","no"));
-        historyModelArrayList.add(new HistoryModel("Roll Planet","Ballari",
-                "1 × Paneer Roll,1 × Veggie Roll,1 × Paneer Roll","24 Dec 2019 at 6:36 PM","₹117.00","Address","no"));
-
-        historyAdaptar = new HistoryAdapter(this,historyModelArrayList,this);
-        rvHistory.setAdapter(historyAdaptar);
-
-    }*/
-
-
     @Override
     public void alertdailog(int position, DeliveryBean.Order deliveryBean) {
-        ViewGroup viewGroup = findViewById( android.R.id.content );
+        ViewGroup viewGroup = findViewById(android.R.id.content);
 
         //then we will inflate the custom alert dialog xml that we created
-        View dialogView = LayoutInflater.from( this ).inflate( R.layout.popup_address, viewGroup, false );
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.popup_address, viewGroup, false);
         // Button btn = (Button) dialogView.findViewById(R.id.btn_done);
-        TextView tv_location = (TextView) dialogView.findViewById( R.id.location );
-        TextView tv_LandMark = (TextView) dialogView.findViewById( R.id.land_mark );
-        TextView tv_MobileNumber = (TextView) dialogView.findViewById( R.id.mobile_number );
+        TextView tv_location = (TextView) dialogView.findViewById(R.id.location);
+        TextView tv_LandMark = (TextView) dialogView.findViewById(R.id.land_mark);
+        TextView tv_MobileNumber = (TextView) dialogView.findViewById(R.id.mobile_number);
 
-        tv_location.setText( deliveryBean.getAddressName() );
-        tv_LandMark.setText( deliveryBean.getLandmark() );
-        tv_MobileNumber.setText( deliveryBean.getUserMobile() );
+        tv_location.setText(deliveryBean.getAddressName());
+        tv_LandMark.setText(deliveryBean.getLandmark());
+        tv_MobileNumber.setText(deliveryBean.getUserMobile());
         //  TextView tv_description = (TextView) dialogView.findViewById(R.id.tv_success_text);
         //Now we need an AlertDialog.Builder object
-        AlertDialog.Builder builder = new AlertDialog.Builder( this );
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         //setting the view of the builder to our custom view that we already inflated
-        builder.setView( dialogView );
+        builder.setView(dialogView);
 
         //finally creating the alert dialog and displaying it
         final AlertDialog alertDialog = builder.create();
-        alertDialog.setCanceledOnTouchOutside( true );
+        alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
-          /*  btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alertDialog.dismiss();
-                    Home.this.finish();
-                }
-            });
-*/
+
 
     }
 
@@ -155,20 +123,20 @@ public class Home extends AppCompatActivity implements AlertDailog, View.OnClick
         int id = v.getId();
         switch (id) {
             case R.id.history:
-                Intent intent = new Intent( this, History.class );
-                startActivity( intent );
+                Intent intent = new Intent(this, History.class);
+                startActivity(intent);
                 break;
 
         }
     }
 
     private void callApi() {
-        Api api = ApiClient.getClient().create( Api.class );
+        Api api = ApiClient.getClient().create(Api.class);
 //        loading = ProgressDialog.show( this, "Loading.....", "wait....", false, false );
-        Call<ServerResponse<DeliveryBean>> call = api.getdeliveryList( "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjIi.D_pVGn5-G7FvW-yowpy3EtreDlFQ-N7xd0PrPB0WZ3M" );
+        Call<ServerResponse<DeliveryBean>> call = api.getdeliveryList("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjIi.D_pVGn5-G7FvW-yowpy3EtreDlFQ-N7xd0PrPB0WZ3M");
         // Log.d("accesss_token",accesss_token.toString());
 
-        call.enqueue( new Callback<ServerResponse<DeliveryBean>>() {
+        call.enqueue(new Callback<ServerResponse<DeliveryBean>>() {
 
             @Override
             public void onResponse(Call<ServerResponse<DeliveryBean>> call, Response<ServerResponse<DeliveryBean>> response) {
@@ -179,9 +147,9 @@ public class Home extends AppCompatActivity implements AlertDailog, View.OnClick
                         DeliveryBean deliveryBeanse = response.body().getData();
                         deliveryBeans = (ArrayList<DeliveryBean.Order>) deliveryBeanse.getOrder();
 
-                         Log.d("deliveryList",deliveryBeans.toString());
+                        Log.d("deliveryList", deliveryBeans.toString());
 
-                        initializeRecyclerView( (ArrayList<DeliveryBean.Order>) deliveryBeanse.getOrder() );
+                        initializeRecyclerView((ArrayList<DeliveryBean.Order>) deliveryBeanse.getOrder());
                     } else {
                         //   showToast(getApplicationContext(), getResources().getString(R.string.something_wrong));
                     }
@@ -189,7 +157,7 @@ public class Home extends AppCompatActivity implements AlertDailog, View.OnClick
                 } else {
                     try {
                         String error_message = response.errorBody().string();
-                        JSONObject jObjError = new JSONObject( error_message );
+                        JSONObject jObjError = new JSONObject(error_message);
                         //   showToast(getApplicationContext(), jObjError.getString("message"));
 
                     } catch (JSONException e) {
@@ -211,16 +179,16 @@ public class Home extends AppCompatActivity implements AlertDailog, View.OnClick
                 // showToast(getApplicationContext(),t.toString());
 
             }
-        } );
+        });
     }
 
 
     private void initializeRecyclerView(ArrayList<DeliveryBean.Order> deliveryBean) {
 
-        layoutManager1 = new LinearLayoutManager( this, LinearLayoutManager.VERTICAL, false );
-        historyAdaptar = new HistoryAdapter( this, deliveryBean, this ,this);
-        rvHistory.setLayoutManager( layoutManager1 );
-        rvHistory.setAdapter( historyAdaptar );
+        layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        historyAdaptar = new HistoryAdapter(this, deliveryBean, this, this);
+        rvHistory.setLayoutManager(layoutManager1);
+        rvHistory.setAdapter(historyAdaptar);
 
 
     }
@@ -232,27 +200,25 @@ public class Home extends AppCompatActivity implements AlertDailog, View.OnClick
 
 
     private void callApi1() {
-        Api api = ApiClient.getClient().create( Api.class );
+        Api api = ApiClient.getClient().create(Api.class);
         JsonObject body = new JsonObject();
-        body.addProperty( "order_id",deliveryBeans.get( 0 ).getSkOrderId() );
-        body.addProperty( "order_status", "delivered" );
-
-//        loading = ProgressDialog.show( this, "Loading.....", "wait....", false, false );
-        Call<ServerResponse<String>> call = api.updateDelivaryStatus( "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjIi.D_pVGn5-G7FvW-yowpy3EtreDlFQ-N7xd0PrPB0WZ3M", body );
-        call.enqueue( new Callback<ServerResponse<String>>() {
+        body.addProperty("order_id", deliveryBeans.get(0).getSkOrderId());
+        body.addProperty("order_status", "delivered");
+        Call<ServerResponse<String>> call = api.updateDelivaryStatus("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjIi.D_pVGn5-G7FvW-yowpy3EtreDlFQ-N7xd0PrPB0WZ3M", body);
+        call.enqueue(new Callback<ServerResponse<String>>() {
 
             @Override
             public void onResponse(Call<ServerResponse<String>> call, Response<ServerResponse<String>> response) {
 //                loading.cancel();
                 if (response.isSuccessful()) {
                     if (response.body().isStatus()) {
-                        Toast.makeText( getApplicationContext(), response.body().getStatusMessage(), Toast.LENGTH_SHORT ).show();
+                        Toast.makeText(getApplicationContext(), response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
 
                     }
                 } else {
                     try {
                         String error_message = response.errorBody().string();
-                        JSONObject jObjError = new JSONObject( error_message );
+                        JSONObject jObjError = new JSONObject(error_message);
                         //   showToast(getApplicationContext(), jObjError.getString("message"));
 
                     } catch (JSONException e) {
@@ -271,11 +237,11 @@ public class Home extends AppCompatActivity implements AlertDailog, View.OnClick
             @Override
             public void onFailure(Call<ServerResponse<String>> call, Throwable t) {
 //                loading.cancel();
-                Toast.makeText( getApplicationContext(), t.toString(), Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
                 // showToast(getApplicationContext(),t.toString());
 
             }
-        } );
+        });
     }
 
 

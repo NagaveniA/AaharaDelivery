@@ -1,11 +1,6 @@
 package com.example.aaharadelivery.adapters;
 
-        import android.R.layout;
-        import android.app.Activity;
-        import android.app.AlertDialog;
         import android.content.Context;
-        import android.content.Intent;
-        import android.graphics.drawable.ColorDrawable;
         import android.os.Build;
         import android.view.LayoutInflater;
         import android.view.View;
@@ -15,20 +10,16 @@ package com.example.aaharadelivery.adapters;
         import android.widget.LinearLayout;
         import android.widget.RelativeLayout;
         import android.widget.Spinner;
-        import android.widget.SpinnerAdapter;
         import android.widget.TextView;
 
         import androidx.annotation.NonNull;
         import androidx.annotation.RequiresApi;
-        import androidx.core.content.ContextCompat;
         import androidx.recyclerview.widget.RecyclerView;
 
 
-        import com.example.aaharadelivery.Home;
         import com.example.aaharadelivery.Interface.AlertDailog;
         import com.example.aaharadelivery.Model.HistoryModel;
         import com.example.aaharadelivery.R;
-        import android.widget.ArrayAdapter;
 
         import java.util.ArrayList;
         import java.util.List;
@@ -48,7 +39,7 @@ public class OldOrderAdapter extends RecyclerView.Adapter<OldOrderAdapter.MyView
         this.historyModelArrayList = historyModelArrayList;
         //this.mcallBack = mcallBack;
     }
-//    public HistoryAdapter(Context context, ArrayList<HistoryModel> historyModelArrayList,Home home) {
+//    public HistoryAdapter(Context context, ArrayList<HistoryModel> historyModelArrayList,HomeActivity home) {
 //        this.context = context;
 //        this.historyModelArrayList = historyModelArrayList;
 //        this.home = home;
