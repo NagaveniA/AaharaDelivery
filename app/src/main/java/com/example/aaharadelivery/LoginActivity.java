@@ -93,6 +93,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             tvPassError.setText("Please Enter Correct Password");
             et_password.requestFocus();
             return false;
+
         }
         return true;
 
