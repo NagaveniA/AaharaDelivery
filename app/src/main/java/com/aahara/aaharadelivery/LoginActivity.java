@@ -128,6 +128,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (id) {
             case R.id.login:
                 if (validate()) {
+
                     callApi();
                 }/*else {
 
