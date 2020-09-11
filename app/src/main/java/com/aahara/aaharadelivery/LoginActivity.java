@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
         }
         initView();
+
         textWatcher();
         session = new UserSessionManager(getApplicationContext());
 

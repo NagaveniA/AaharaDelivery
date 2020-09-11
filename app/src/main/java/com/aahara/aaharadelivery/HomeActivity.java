@@ -132,7 +132,7 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
     private void callApi() {
         Api api = ApiClient.getClient().create(Api.class);
 //        loading = ProgressDialog.show( this, "Loading.....", "wait....", false, false );
-        Call<ServerResponse<DeliveryBean>> call = api.getdeliveryList("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjIi.D_pVGn5-G7FvW-yowpy3EtreDlFQ-N7xd0PrPB0WZ3M");
+        Call<ServerResponse<DeliveryBean>> call = api.getdeliveryList(accesss_token);
         // Log.d("accesss_token",accesss_token.toString());
 
         call.enqueue(new Callback<ServerResponse<DeliveryBean>>() {
@@ -203,7 +203,7 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
         JsonObject body = new JsonObject();
         body.addProperty("order_id", deliveryBeans.get(0).getSkOrderId());
         body.addProperty("order_status", "delivered");
-        Call<ServerResponse<String>> call = api.updateDelivaryStatus("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjIi.D_pVGn5-G7FvW-yowpy3EtreDlFQ-N7xd0PrPB0WZ3M", body);
+        Call<ServerResponse<String>> call = api.updateDelivaryStatus(accesss_token, body);
         call.enqueue(new Callback<ServerResponse<String>>() {
 
             @Override
