@@ -1,4 +1,4 @@
-package com.example.aaharadelivery.Model;
+package com.aahara.aaharadelivery.Model;
 
 public class HistoryModel {
     String restaurants_name,location,items,date,total_amt,rating,status;

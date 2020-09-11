@@ -1,13 +1,10 @@
-package com.example.aaharadelivery.NetworkUtils;
+package com.aahara.aaharadelivery.NetworkUtils;
 
 
-import com.example.aaharadelivery.Model.DeliveryBean;
-import com.example.aaharadelivery.Model.LoginBean;
+import com.aahara.aaharadelivery.Model.DeliveryBean;
+import com.aahara.aaharadelivery.Model.LoginBean;
 import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
-
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

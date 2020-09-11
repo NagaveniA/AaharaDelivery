@@ -1,7 +1,7 @@
-package com.example.aaharadelivery.Interface;
+package com.aahara.aaharadelivery.Interface;
 
 
-import com.example.aaharadelivery.Model.DeliveryBean;
+import com.aahara.aaharadelivery.Model.DeliveryBean;
 
 public interface AlertDailog {
 

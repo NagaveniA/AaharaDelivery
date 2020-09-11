@@ -1,10 +1,10 @@
-package com.example.aaharadelivery.SessionManagers;
+package com.aahara.aaharadelivery.SessionManagers;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.example.aaharadelivery.LoginActivity;
+import com.aahara.aaharadelivery.LoginActivity;
 
 import java.util.HashMap;
 

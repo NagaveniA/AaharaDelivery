@@ -1,4 +1,4 @@
-package com.example.aaharadelivery;
+package com.aahara.aaharadelivery;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,21 +12,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.aaharadelivery.Interface.AlertDailog;
-import com.example.aaharadelivery.Model.DeliveryBean;
-import com.example.aaharadelivery.Model.HistoryModel;
-import com.example.aaharadelivery.Model.OrderBean;
-import com.example.aaharadelivery.NetworkUtils.Api;
-import com.example.aaharadelivery.NetworkUtils.ApiClient;
-import com.example.aaharadelivery.NetworkUtils.ServerResponse;
-import com.example.aaharadelivery.SessionManagers.UserSessionManager;
-import com.example.aaharadelivery.adapters.HistoryAdapter;
+import com.aahara.aaharadelivery.Interface.AlertDailog;
+import com.aahara.aaharadelivery.Model.DeliveryBean;
+import com.aahara.aaharadelivery.Model.HistoryModel;
+import com.aahara.aaharadelivery.Model.OrderBean;
+import com.aahara.aaharadelivery.NetworkUtils.Api;
+import com.aahara.aaharadelivery.NetworkUtils.ApiClient;
+import com.aahara.aaharadelivery.NetworkUtils.ServerResponse;
+import com.aahara.aaharadelivery.SessionManagers.UserSessionManager;
+import com.aahara.aaharadelivery.adapters.HistoryAdapter;
 import com.google.gson.JsonObject;
 
 

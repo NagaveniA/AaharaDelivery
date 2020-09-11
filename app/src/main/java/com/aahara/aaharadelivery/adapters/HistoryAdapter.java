@@ -1,4 +1,4 @@
-package com.example.aaharadelivery.adapters;
+package com.aahara.aaharadelivery.adapters;
 
 import android.content.Context;
 import android.os.Build;
@@ -18,10 +18,10 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.aaharadelivery.HomeActivity;
-import com.example.aaharadelivery.Interface.AlertDailog;
-import com.example.aaharadelivery.Model.DeliveryBean;
-import com.example.aaharadelivery.R;
+import com.aahara.aaharadelivery.HomeActivity;
+import com.aahara.aaharadelivery.Interface.AlertDailog;
+import com.aahara.aaharadelivery.Model.DeliveryBean;
+import com.aahara.aaharadelivery.R;
 
 import java.util.ArrayList;
 import java.util.List;

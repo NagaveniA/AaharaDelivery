@@ -1,39 +1,21 @@
 
-package com.example.aaharadelivery;
+package com.aahara.aaharadelivery;
 
-        import androidx.annotation.RequiresApi;
         import androidx.appcompat.app.AppCompatActivity;
-        import androidx.appcompat.widget.Toolbar;
         import androidx.recyclerview.widget.LinearLayoutManager;
         import androidx.recyclerview.widget.RecyclerView;
 
-        import android.app.AlertDialog;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.os.Build;
         import android.os.Bundle;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.Button;
         import android.widget.ImageView;
         import android.widget.RelativeLayout;
         import android.widget.TextView;
 
-        import com.example.aaharadelivery.Interface.AlertDailog;
-        import com.example.aaharadelivery.Model.DeliveryBean;
-        import com.example.aaharadelivery.Model.HistoryModel;
-        import com.example.aaharadelivery.Model.OrderBean;
-        import com.example.aaharadelivery.adapters.HistoryAdapter;
-        import com.example.aaharadelivery.adapters.OldOrderAdapter;
+        import com.aahara.aaharadelivery.Model.HistoryModel;
+        import com.aahara.aaharadelivery.Model.OrderBean;
+        import com.aahara.aaharadelivery.adapters.OldOrderAdapter;
 
 
         import java.util.ArrayList;
-        import java.util.List;
-
-        import butterknife.BindView;
-        import butterknife.ButterKnife;
-        import butterknife.OnClick;
 
 public class History extends AppCompatActivity  {
 

@@ -1,9 +1,9 @@
-package com.example.aaharadelivery.NetworkUtils;
+package com.aahara.aaharadelivery.NetworkUtils;
 
 import android.util.Log;
 
 
-import com.example.aaharadelivery.App;
+import com.aahara.aaharadelivery.App;
 
 import java.io.IOException;
 

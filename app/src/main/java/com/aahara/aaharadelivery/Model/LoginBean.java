@@ -1,4 +1,4 @@
-package com.example.aaharadelivery.Model;
+package com.aahara.aaharadelivery.Model;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.example.aaharadelivery.NetworkUtils;
+package com.aahara.aaharadelivery.NetworkUtils;
 
 public class ServerResponse<T> {
     private boolean status;

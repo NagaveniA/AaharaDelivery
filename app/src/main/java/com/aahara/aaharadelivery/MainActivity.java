@@ -1,4 +1,4 @@
-package com.example.aaharadelivery;
+package com.aahara.aaharadelivery;
 
 import androidx.appcompat.app.AppCompatActivity;
 
