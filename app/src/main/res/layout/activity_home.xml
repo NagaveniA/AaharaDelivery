@@ -9,55 +9,55 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:background="#f83042"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#f83042">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/your_orders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Your Orders"
+            <TextView
+                android:id="@+id/your_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
 
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="18sp"
-            android:textColor="@color/white"/>
+                android:text="Your Orders"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="History"
-            android:layout_alignParentRight="true"
-            android:fontFamily="@font/poppins_regular"
-            android:layout_marginRight="@dimen/dimen_20"
-            android:textSize="18sp"
-            android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:fontFamily="@font/poppins_regular"
+                android:text  ="History"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:visibility="gone" />
 
 
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
- <!--   <ImageView
-        android:id="@+id/iv_empty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_margin="@dimen/dimen_20"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
-        android:src="@drawable/nodata"/>-->
+    <!--   <ImageView
+           android:id="@+id/iv_empty"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/toolbar"
+           android:layout_margin="@dimen/dimen_20"
+           android:visibility="gone"
+           android:layout_centerInParent="true"
+           android:src="@drawable/nodata"/>-->
 
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/rv_history"
-        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"></androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

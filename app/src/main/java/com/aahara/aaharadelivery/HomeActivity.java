@@ -131,15 +131,15 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
 
     private void callApi() {
         Api api = ApiClient.getClient().create(Api.class);
-//        loading = ProgressDialog.show( this, "Loading.....", "wait....", false, false );
-        Call<ServerResponse<DeliveryBean>> call = api.getdeliveryList(accesss_token);
+        loading = ProgressDialog.show( this, "Loading.....", "wait....", false, false );
+        Call<ServerResponse<DeliveryBean>> call = api.getdeliveryList("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjIi.D_pVGn5-G7FvW-yowpy3EtreDlFQ-N7xd0PrPB0WZ3M");
         // Log.d("accesss_token",accesss_token.toString());
 
         call.enqueue(new Callback<ServerResponse<DeliveryBean>>() {
 
             @Override
             public void onResponse(Call<ServerResponse<DeliveryBean>> call, Response<ServerResponse<DeliveryBean>> response) {
-//                loading.cancel();
+                loading.cancel();
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
 

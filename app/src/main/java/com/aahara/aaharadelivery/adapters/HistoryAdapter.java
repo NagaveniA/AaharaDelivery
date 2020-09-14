@@ -114,8 +114,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             orderList.add( "Received" );
             orderList.add( "Picked-up" );
             orderList.add( "Delivered" );
-            dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item,orderList);
-            dataAdapter.setDropDownViewResource( android.R.layout.simple_spinner_item );
+            dataAdapter = new ArrayAdapter<String>(context,R.layout.layout_spinner,orderList);
+            dataAdapter.setDropDownViewResource(R.layout.layout_spinner );
             orderSpinnar.setAdapter( dataAdapter );
             orderSpinnar.setSelection(0,false);
             orderSpinnar.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
