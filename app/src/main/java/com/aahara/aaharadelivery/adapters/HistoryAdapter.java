@@ -1,6 +1,8 @@
 package com.aahara.aaharadelivery.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,31 +11,44 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.aahara.aaharadelivery.History;
 import com.aahara.aaharadelivery.HomeActivity;
 import com.aahara.aaharadelivery.Interface.AlertDailog;
 import com.aahara.aaharadelivery.Model.DeliveryBean;
+import com.aahara.aaharadelivery.Model.OrderItemListModel;
 import com.aahara.aaharadelivery.R;
+import com.aahara.aaharadelivery.google_map.MapsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder> {
-    private Context context;
-   // private ArrayList<HistoryModel> historyModelArrayList = new ArrayList<>();
-   private List<DeliveryBean.Order> deliveryBeanList = new ArrayList<>(  );
+    private Context context,mcontext;
+    ArrayList<OrderItemListModel> model = new ArrayList<>();
+
+    public HistoryAdapter(ArrayList<OrderItemListModel> model,Context mcontext) {
+        this.model = model;
+        this.mcontext = mcontext;
+    }
+
+    private List<DeliveryBean.Order> deliveryBeanList = new ArrayList<>(  );
+    private List<DeliveryBean.Item> delivaryBeamListItem = new ArrayList<>();
     AlertDailog mcallBack;
     ArrayAdapter<String>  dataAdapter;
     HomeActivity home;
@@ -43,6 +58,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         this.mcallBack = mcallBack;
         this.home = home;
     }
+
 
   @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -56,13 +72,65 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         DeliveryBean.Order deliveryBean = deliveryBeanList.get( position );
         holder.tvShopName.setText( deliveryBean.getRestaurantName() );
         holder.tvLocation.setText( deliveryBean.getLandmark() );
-//        holder.tvItems.setText( (CharSequence) deliveryBean.getItem() );
+        holder.tvLongitude.setText( deliveryBean.getLongitude());
+        holder.tvLatitude.setText( deliveryBean.getLatitude());
+
+
         holder.tvOrderedOn.setText( deliveryBean.getOrderedDate() );
         holder.tvTotalAmount.setText( deliveryBean.getTotalCost() );
-        // holder.tvRating.setText(historyModel.getRating());
 
-        //String [] orderList ={"Selected Order,Pickup Order,Cancel Order"};
 
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mcontext,LinearLayoutManager.HORIZONTAL,false);
+        holder.items_recycler.setLayoutManager(layoutManager);
+        OrderItemListAdapter orderItemListAdapter = new OrderItemListAdapter(deliveryBean.getItem(),mcontext);
+
+        //deliveryBean.getItem();
+        holder.items_recycler.setAdapter(orderItemListAdapter);
+        holder.tvOrderstatus.setText(deliveryBean.getOrder_status());
+
+        List<String> orderList = new ArrayList<String>(  );
+        orderList.add( "--Select--" );
+        orderList.add( "picked_up" );
+        orderList.add( "delivered" );
+        holder.order_id.setText(deliveryBean.getSkOrderId());
+
+
+        dataAdapter = new ArrayAdapter<String>(context,R.layout.layout_spinner,orderList);
+        dataAdapter.setDropDownViewResource(R.layout.layout_spinner );
+        holder.orderSpinnar.setAdapter( dataAdapter );
+        String orderstatus = holder.tvOrderstatus.getText().toString();
+        if(orderstatus.equals("placed"))
+        {
+            holder.orderSpinnar.setSelection(0,false);
+        }else if (orderstatus.equals("Outfordelivery")){
+            holder.orderSpinnar.setSelection(1,false);
+        }
+
+
+        holder.orderSpinnar.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                String order_no = holder.order_id.getText().toString();
+
+                 if(item == "delivered"){
+                    home.callApi1( position,item ,order_no);
+                    home.callApi();
+                    }
+                    else
+                    {
+                        String item1 = "Outfordelivery";
+                        home.callApi1( position,item1 ,order_no);
+                    }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        } );
 
     }
 
@@ -75,6 +143,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         /**
          * ButterKnife Code
          **/
+        @BindView( R.id.itemsRecycler )
+        RecyclerView items_recycler;
         @BindView( R.id.order_spenner )
         Spinner orderSpinnar;
         @BindView(R.id.rl_item)
@@ -85,8 +155,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         TextView tvShopName;
         @BindView(R.id.tv_location)
         TextView tvLocation;
-        @BindView(R.id.tv_items)
-        TextView tvItems;
+//        @BindView(R.id.tv_items)
+//        TextView tvItems;
+        @BindView(R.id.tv_latitude)
+        TextView tvLatitude;
+        @BindView(R.id.tv_longitude)
+        TextView tvLongitude;
+        @BindView(R.id.tv_order_status)
+        TextView tvOrderstatus;
         @BindView(R.id.tv_ordered_on)
         TextView tvOrderedOn;
         @BindView(R.id.tv_total_amount)
@@ -99,40 +175,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 //        TextView tvAddress;
         @BindView(R.id.address)
         Button address;
-       /* @BindView(R.id.tv_repeat_order)
-        TextView tvRepeatOrder;
-       */
+        @BindView(R.id.tv_orderId)
+        TextView order_id;
 
-        /**
-         * ButterKnife Code
-         **/
+
+
         public MyViewHolder(@NonNull View itemView) {
             super( itemView );
             ButterKnife.bind( this, itemView );
+            items_recycler  = itemView.findViewById(R.id.itemsRecycler);
             address.setOnClickListener( this );
-            List<String> orderList = new ArrayList<String>(  );
-            orderList.add( "Received" );
-            orderList.add( "Picked-up" );
-            orderList.add( "Delivered" );
-            dataAdapter = new ArrayAdapter<String>(context,R.layout.layout_spinner,orderList);
-            dataAdapter.setDropDownViewResource(R.layout.layout_spinner );
-            orderSpinnar.setAdapter( dataAdapter );
-            orderSpinnar.setSelection(0,false);
-            orderSpinnar.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String item = parent.getItemAtPosition(position).toString();
-
-                    home.spinnerList( position,item );
-                 //   mcallBack.spinnerList( position, item );
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            } );
 
         }
 
@@ -141,10 +193,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            DeliveryBean.Order deliveryBean = deliveryBeanList.get( position );
+            String shopName = tvShopName.getText().toString();
+            String latitude = tvLatitude.getText().toString();
+            String longitude = tvLongitude.getText().toString();
+            double lat = Double.parseDouble(latitude);
+            double lon = Double.parseDouble(longitude);
 
-            mcallBack.alertdailog( position,deliveryBean );
-          //  mcallBack.spinnerList( position,dataAdapter  );
+           String uri = "http://maps.google.com/maps?q=loc:" + lat + "," + lon + " (" +"SHASHI"+ ")";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.valueOf(uri)));
+            context.startActivity(intent);
         }
     }
 

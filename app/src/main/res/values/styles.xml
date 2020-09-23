@@ -5,7 +5,8 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#000000</item>
+        <item name="android:textColorHint">@color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -17,6 +18,14 @@
         <item name="android:textSize">@dimen/font_14</item>
         <item name="android:padding">@dimen/dimen_8dp</item>
         <item name="android:gravity">left</item>
+    </style>
+
+    <style name="EditTextHint" parent="TextAppearance.AppCompat">
+        <item name="colorAccent">@android:color/black</item>
+        <item name="android:textColorHint">@color/black</item>
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/black</item>
+        <item name="colorControlHighlight">@color/black</item>
     </style>
 
 </resources>

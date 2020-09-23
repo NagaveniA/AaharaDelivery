@@ -23,4 +23,6 @@
         <item name="android:textColor">@color/text</item>
         <item name="android:layout_marginTop">10dp</item>
     </style>
+
+    <string name="title_activity_maps">Map</string>
 </resources>

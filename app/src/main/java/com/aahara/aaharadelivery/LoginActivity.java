@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aahara.aaharadelivery.Model.LoginBean;
 import com.aahara.aaharadelivery.NetworkUtils.Api;
@@ -85,13 +86,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(et_email.getText().toString()).matches()) {
             tvUserError.setVisibility(View.VISIBLE);
-            tvUserError.setText("Please Enter Correct Email");
+            tvUserError.setText("Enter email");
 
             et_email.requestFocus();
             return false;
         } else if (TextUtils.isEmpty(et_password.getText().toString())) {
             tvPassError.setVisibility(View.VISIBLE);
-            tvPassError.setText("Please Enter Correct Password");
+            tvPassError.setText("Enter password");
             et_password.requestFocus();
             return false;
 
@@ -165,9 +166,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     try {
                         String error_message = response.errorBody().string();
                         JSONObject jObjError = new JSONObject(error_message);
-                        wrongMail.setVisibility(View.VISIBLE);
+
+                        if ((jObjError.getString("message")).equals("User doesn't exist"))
+                        {
+                            tvUserError.setVisibility(View.VISIBLE);
+                            tvUserError.setText(jObjError.getString("message"));
+                        }
+                        else {
+                            tvPassError.setVisibility(View.VISIBLE);
+                            tvPassError.setText(jObjError.getString("message"));
+                        }
+
+                        System.out.println(jObjError.getString("message")+"*****************************");
+                        System.out.println(error_message+"+++++++++++++++++++++++++++++++");
                         // wrongPassword.setVisibility( View.VISIBLE );
-                        // showToast(getApplicationContext(), jObjError.getString("message"));
+                        //Toast.makeText(getApplicationContext(), jObjError.getString("message"),Toast.LENGTH_SHORT).show();
 
                     } catch (JSONException e) {
                         e.printStackTrace();

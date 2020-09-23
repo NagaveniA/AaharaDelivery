@@ -82,5 +82,12 @@ public class UserSessionManager {
         return sharedPreferences.getBoolean(IS_USER_LOGIN, false);
     }
 
+    public void logoutUser() {
+        editor.putBoolean(IS_USER_LOGIN, false);
+        editor.clear();
+        editor.commit();
+
+    }
+
 
 }

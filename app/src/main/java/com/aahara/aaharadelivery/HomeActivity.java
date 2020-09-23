@@ -3,10 +3,13 @@ package com.aahara.aaharadelivery;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +43,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static java.security.AccessController.getContext;
+
 public class HomeActivity extends AppCompatActivity implements AlertDailog, View.OnClickListener {
 
 
@@ -55,7 +60,7 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
 
 
     private TextView address;
-    TextView tvOrderSpinner, tvHistory, tv_location;
+    TextView tvOrderSpinner, tvHistory, tv_location, logout;
 
     RecyclerView rvOrderDropDown;
     RelativeLayout rlSpinnerProject;
@@ -66,6 +71,7 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
     String accesss_token = "";
     private DeliveryBean deliveryBean;
     ArrayList<DeliveryBean.Order> deliveryBeans = new ArrayList<>();
+    ArrayList<DeliveryBean.Item> deliveryBeansitem = new ArrayList<>();
     private UserSessionManager session;
 
 
@@ -80,11 +86,19 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
 
         rvHistory = (RecyclerView) findViewById(R.id.rv_history);
         tvHistory = (TextView) findViewById(R.id.history);
-
+        logout = (TextView) findViewById(R.id.logout);
+        logout.setOnClickListener(this);
         tvHistory.setOnClickListener(this);
 
         callApi();
-
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                callApi();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -116,6 +130,11 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
 
     }
 
+    @Override
+    public void spinnerList(int position, String item) {
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -125,14 +144,24 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
                 Intent intent = new Intent(this, History.class);
                 startActivity(intent);
                 break;
+            case R.id.logout:
+                session.logoutUser();
+                Intent logIntent = new Intent(HomeActivity.this, LoginActivity.class);
+                logIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                logIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                logIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(logIntent);
+                finish();
 
         }
     }
 
-    private void callApi() {
+    public void callApi() {
         Api api = ApiClient.getClient().create(Api.class);
-        loading = ProgressDialog.show( this, "Loading.....", "wait....", false, false );
-        Call<ServerResponse<DeliveryBean>> call = api.getdeliveryList("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjIi.D_pVGn5-G7FvW-yowpy3EtreDlFQ-N7xd0PrPB0WZ3M");
+        loading = ProgressDialog.show(this, "Loading.....", "wait....", false, false);
+
+        //  Call<ServerResponse<DeliveryBean>> call = api.getdeliveryList("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjIi.D_pVGn5-G7FvW-yowpy3EtreDlFQ-N7xd0PrPB0WZ3M");
+        Call<ServerResponse<DeliveryBean>> call = api.getdeliveryList(accesss_token);
         // Log.d("accesss_token",accesss_token.toString());
 
         call.enqueue(new Callback<ServerResponse<DeliveryBean>>() {
@@ -142,6 +171,7 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
                 loading.cancel();
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
+
 
                         DeliveryBean deliveryBeanse = response.body().getData();
                         deliveryBeans = (ArrayList<DeliveryBean.Order>) deliveryBeanse.getOrder();
@@ -193,16 +223,14 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
     }
 
 
-    public void spinnerList(int position, String item) {
-        callApi1();
-    }
 
 
-    private void callApi1() {
+
+    public void callApi1(int i,String item,String orderId) {
         Api api = ApiClient.getClient().create(Api.class);
         JsonObject body = new JsonObject();
-        body.addProperty("order_id", deliveryBeans.get(0).getSkOrderId());
-        body.addProperty("order_status", "delivered");
+        body.addProperty("order_id", orderId);
+        body.addProperty("order_status", item);
         Call<ServerResponse<String>> call = api.updateDelivaryStatus(accesss_token, body);
         call.enqueue(new Callback<ServerResponse<String>>() {
 
@@ -218,7 +246,7 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
                     try {
                         String error_message = response.errorBody().string();
                         JSONObject jObjError = new JSONObject(error_message);
-                        //   showToast(getApplicationContext(), jObjError.getString("message"));
+                        Toast.makeText(getApplicationContext(), jObjError.getString("message"),  Toast.LENGTH_SHORT).show();
 
                     } catch (JSONException e) {
                         e.printStackTrace();

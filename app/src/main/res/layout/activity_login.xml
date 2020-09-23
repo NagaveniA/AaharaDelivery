@@ -5,44 +5,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f83042"
+    android:background="#D5374E"
     tools:context=".LoginActivity">
-
+<!--#D5374E-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/tv_logo_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/roboto_bold_italic"
+                android:text=" Aahara "
+                android:textColor="@color/white"
+                android:textSize="50dp" />
+            <TextView
+                android:id="@+id/tv_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="-15dp"
+                android:fontFamily="@font/roboto_bold_italic"
+                android:text="Delivery "
+                android:textColor="@color/white"
+                android:textSize="25dp"
+               />
 
+
+
+            <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+                android:layout_marginTop="@dimen/dimen_110dp">
+
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:layout_margin="@dimen/dimen_10dp"
+    app:cardCornerRadius="@dimen/dimen_5dp"
+    android:elevation="@dimen/dimen_25dp"
+    app:cardElevation="@dimen/dimen_15dp"
+    >
             <LinearLayout
                 android:id="@+id/login_lnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/dimen_25dp"
+
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_20dp"
-                    android:layout_marginBottom="@dimen/dimen_20dp"
                     android:text="LOGIN"
-                    android:textColor="#fff"
+                    android:textColor="#D5374E"
                     android:textSize="@dimen/dimen_22"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginBottom="@dimen/dimen_20"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_20dp"
-                    android:layout_marginTop="@dimen/dimen_10dp"
-                    android:layout_marginRight="@dimen/dimen_20dp"
-                    android:layout_marginBottom="@dimen/dimen_10dp"
-                    android:textColorHint="@color/text">
+
+                    style="@style/EditTextHint">
 
                     <EditText
                         android:id="@+id/user_email"
@@ -50,51 +88,35 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
                         android:hint="Email"
-                        android:inputType="textCapWords"
-                        android:paddingTop="@dimen/dimen_5dp"
-                        android:paddingBottom="@dimen/dimen_10dp"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/font_14"
+
                         android:singleLine="true"
-                        android:textColorHint="@color/text" />
+                        android:theme="@style/EditTextHint"
+
+                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/usererror"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/user_name"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginRight="25dp"
-                    android:paddingLeft="15dp"
-                    android:text="Enter Valid Email"
-                    android:textColor="@color/white"
+                    android:text="Enter email"
+                    android:textColor="@color/error"
                     android:textSize="12sp"
+                    android:textStyle="bold"
                     android:visibility="gone"
-                    app:fontFamily="@font/poppins_regular" />
+                    app:fontFamily="@font/poppins_regular"
+                    android:layout_marginTop="-5dp"
+                    android:layout_marginLeft="3dp"/>
 
-                <TextView
-                    android:id="@+id/wrong_mail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/enter_mail"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center"
-                    android:text="Please Enter Valid Email and Password"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_16"
-                    android:visibility="gone" />
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_20dp"
-                    android:layout_marginTop="@dimen/dimen_10dp"
-                    android:layout_marginRight="@dimen/dimen_20dp"
-
-                    android:textColorHint="@color/text">
+                    style="@style/EditTextHint"
+                    android:layout_marginTop="@dimen/dimen_20">
 
                     <EditText
                         android:id="@+id/password"
@@ -103,10 +125,12 @@
                         android:fontFamily="@font/poppins_regular"
                         android:hint="Password"
                         android:inputType="textPassword"
+
                         android:paddingTop="@dimen/dimen_5dp"
+                        android:textSize="@dimen/font_14"
                         android:paddingBottom="@dimen/dimen_10dp"
                         android:singleLine="true"
-                        android:textColorHint="@color/text"
+                        android:theme="@style/EditTextHint"
 
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -115,18 +139,14 @@
                     android:id="@+id/password_error"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/user_name"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginRight="25dp"
-                    android:paddingLeft="15dp"
-                    android:text="Enter Valid Email"
-                    android:textColor="@color/white"
+                    android:text="Enter password"
+                    android:textStyle="bold"
+                    android:textColor="@color/error"
                     android:textSize="12sp"
                     android:visibility="gone"
-                    app:fontFamily="@font/poppins_regular" />
+                    app:fontFamily="@font/poppins_regular"
+                    android:layout_marginTop="-5dp"
+                    android:layout_marginLeft="3dp"/>
 
                 <TextView
                     android:id="@+id/wrong_password"
@@ -134,31 +154,43 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/enter_mail"
                     android:fontFamily="@font/poppins_regular"
-                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/dimen_25dp"
                     android:text="Please Enter Valid Password"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/font_16"
-                    android:visibility="gone" />
+                    android:textSize="@dimen/font_12"
+                    android:visibility="gone"
+                    android:layout_marginTop="-5dp"/>
+                <TextView
+                    android:id="@+id/wrong_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/enter_mail"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_marginLeft="@dimen/dimen_25dp"
+                    android:text="Please Enter Valid Email and Password"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_12"
+                    android:visibility="gone"
+                    android:layout_marginTop="-5dp"/>
             </LinearLayout>
 
+</androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
             <ImageView
+                android:id="@+id/login"
                 android:layout_width="@dimen/dimen_40dp"
                 android:layout_height="@dimen/dimen_40"
                 android:layout_below="@id/login_lnr"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="@dimen/dimen_45"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen_25"
+                android:layout_marginBottom="@dimen/dimen_25dp"
+                android:padding="@dimen/dimen_5dp"
+                android:background="@drawable/round_circle"
                 android:src="@drawable/ic_arrow_forward_white_24dp" />
-
-            <ImageView
-                android:id="@+id/login"
-                android:layout_width="@dimen/dimen_50"
-                android:layout_height="@dimen/dimen_50"
-                android:layout_below="@id/login_lnr"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="@dimen/dimen_40"
-                android:src="@drawable/ic_radio_button_unchecked_white_24dp" />
-
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -23,6 +23,9 @@ public class DeliveryBean implements Serializable
         this.order = order;
     }
 
+
+
+
     public class Order implements Serializable {
 
         @SerializedName("sk_order_id")
@@ -52,9 +55,19 @@ public class DeliveryBean implements Serializable
          @SerializedName("user_mobile")
          @Expose
          private String userMobile;
+        @SerializedName("user_latitude")
+        @Expose
+        private String latitude;
+        @SerializedName("user_longitude")
+        @Expose
+        private String longitude;
+//
+        @SerializedName("order_status")
+        @Expose
+        private String order_status;
         @SerializedName("item")
         @Expose
-        private List<Item> item = null;
+        public List<Item> item = null;
         private final static long serialVersionUID = 9164711073757581355L;
 
         public String getSkOrderId() {
@@ -79,6 +92,14 @@ public class DeliveryBean implements Serializable
 
         public void setRestaurantName(String restaurantName) {
             this.restaurantName = restaurantName;
+        }
+
+        public String getOrder_status() {
+            return order_status;
+        }
+
+        public void setOrder_status(String order_status) {
+            this.order_status = order_status;
         }
 
         public String getTotalCost() {
@@ -109,6 +130,22 @@ public class DeliveryBean implements Serializable
             return addressName;
         }
 
+        public String getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(String latitude) {
+            this.latitude = latitude;
+        }
+
+        public String getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(String longitude) {
+            this.longitude = longitude;
+        }
+
         public void setAddressName(String addressName) {
             this.addressName = addressName;
         }
@@ -131,6 +168,7 @@ public class DeliveryBean implements Serializable
         }
 
         public List<Item> getItem() {
+
             return item;
         }
 
@@ -154,6 +192,7 @@ public class DeliveryBean implements Serializable
         @SerializedName("item_type")
         @Expose
         private String itemType;
+
         @SerializedName("cart_count")
         @Expose
         private String cartCount;
