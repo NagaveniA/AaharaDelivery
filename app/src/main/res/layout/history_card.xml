@@ -95,14 +95,17 @@
 
                             android:visibility="gone" />
 
+
+
                         <TextView
-                            android:id="@+id/tv_location"
+                            android:id="@+id/tv_ordered_on"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="@string/location"
-                            android:textColor="@color/text"
-                            android:textSize="14sp" />
+                            android:text="@string/date"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:layout_gravity="right"/>
 
 
                     </LinearLayout>
@@ -144,43 +147,103 @@
 <!--                        android:textSize="14sp" />-->
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_5dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="@string/ordered_on"
-                        android:textAllCaps="true"
-                        android:textColor="@color/gray_text"
-                        android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tv_ordered_on"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="@string/date"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_5dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="@string/total_amt"
-                        android:textAllCaps="true"
-                        android:textColor="@color/gray_text"
-                        android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tv_total_amount"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dimen_10dp"
-                        android:text="@string/amt"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/address_dropdown"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="address"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textAllCaps="true"
+                                android:textColor="@color/gray_text"
+                              />
+                            <ImageView
+                                android:id="@+id/drop_img1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_arrow_drop_down_24"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true" />
+                            <ImageView
+                                android:id="@+id/drop_img"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true" />
+                        </RelativeLayout>
+                       <LinearLayout
+                           android:id="@+id/ll_address"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                           android:visibility="visible">
+                           <LinearLayout
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:orientation="horizontal">
+                           <TextView
+                            android:id="@+id/view_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="address"
+                               android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/black"
+                            />
+                               <TextView
+
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:text=" , "
+                                   android:textColor="@color/black"
+                                   />
+                               <TextView
+                               android:id="@+id/landmark"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="landmark"
+                                   android:fontFamily="@font/poppins_regular"
+                               android:textColor="@color/black"
+                               />
+
+
+                           </LinearLayout>
+                           <TextView
+                               android:id="@+id/tv_location"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+
+                               android:fontFamily="@font/poppins_regular"
+                               android:text="@string/location"
+                               android:visibility="visible"
+                               android:textColor="@color/black"
+                               android:textSize="14sp" />
+                        <Button
+                            android:id="@+id/address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_35"
+                            android:text="Get direction"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textAllCaps="false"
+                            android:background="@drawable/getdirection_bg"
+                            android:textColor="#ffffff"
+                            android:layout_gravity="right"
+                            android:padding="5dp"
+                            android:layout_marginRight="@dimen/dimen_15dp"
+                            />
+                       </LinearLayout>
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/tv_orderId"
                         android:layout_width="wrap_content"
@@ -234,7 +297,8 @@
                         android:textAllCaps="false"
                         android:textColor="@color/redtext"
                         android:textSize="14sp"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:gravity="center_horizontal" />
 
 
                 </LinearLayout>
@@ -252,18 +316,41 @@
                         android:text="Address"
                         android:textColor="@color/black"
                         android:textSize="14sp" />-->
-                    <Button
-                        android:id="@+id/address"
+<!--                    <Button-->
+<!--                        android:id="@+id/address"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="@font/poppins_medium"-->
+<!--                        android:text="Address"-->
+<!--                        android:padding="@dimen/dimen_15dp"-->
+<!--                        android:layout_alignParentStart="true"-->
+<!--                        android:background="@drawable/background_button"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="@dimen/font_14"-->
+<!--                        android:layout_alignParentLeft="true" />-->
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="Address"
-                        android:padding="@dimen/dimen_15dp"
-                        android:layout_alignParentStart="true"
-                        android:background="@drawable/background_button"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14"
-                        android:layout_alignParentLeft="true" />
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_5dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="@string/total_amt"
+                            android:textAllCaps="true"
+                            android:textColor="@color/gray_text"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_total_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dimen_10dp"
+                            android:text="@string/amt"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+                    </LinearLayout>
 
 
                     <Spinner

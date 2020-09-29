@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -71,15 +72,35 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DeliveryBean.Order deliveryBean = deliveryBeanList.get( position );
         holder.tvShopName.setText( deliveryBean.getRestaurantName() );
-        holder.tvLocation.setText( deliveryBean.getLandmark() );
+        holder.landmark.setText( deliveryBean.getLandmark() );
+        holder.tvLocation.setText( deliveryBean.getUserMobile() );
         holder.tvLongitude.setText( deliveryBean.getLongitude());
         holder.tvLatitude.setText( deliveryBean.getLatitude());
-
-
+        holder.viewAdress.setText(deliveryBean.getAddressName());
         holder.tvOrderedOn.setText( deliveryBean.getOrderedDate() );
         holder.tvTotalAmount.setText( deliveryBean.getTotalCost() );
 
+        ////
+        holder.address_dropdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // boolean click_event = false;
+                if(holder.ll_address.getVisibility()==View.GONE){
+                    holder.ll_address.setVisibility(View.VISIBLE);
+                    holder.dropImg1.setVisibility(View.GONE);
 
+                    holder.dropImg.setImageResource(R.drawable.ic_arrow_drop_up_24);
+
+                }
+                else if(holder.ll_address.getVisibility()==View.VISIBLE)
+                {
+                    holder.ll_address.setVisibility(View.GONE);
+                    holder.dropImg.setImageResource(R.drawable.ic_arrow_drop_down_24);
+
+                }
+            }
+        });
+        ///
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mcontext,LinearLayoutManager.HORIZONTAL,false);
         holder.items_recycler.setLayoutManager(layoutManager);
         OrderItemListAdapter orderItemListAdapter = new OrderItemListAdapter(deliveryBean.getItem(),mcontext);
@@ -102,7 +123,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         if(orderstatus.equals("placed"))
         {
             holder.orderSpinnar.setSelection(0,false);
-        }else if (orderstatus.equals("Outfordelivery")){
+        }else if (orderstatus.equals("OutForDelivery")){
             holder.orderSpinnar.setSelection(1,false);
         }
 
@@ -119,7 +140,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
                     }
                     else
                     {
-                        String item1 = "Outfordelivery";
+                        String item1 = "OutForDelivery";
                         home.callApi1( position,item1 ,order_no);
                     }
 
@@ -177,6 +198,19 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         Button address;
         @BindView(R.id.tv_orderId)
         TextView order_id;
+        @BindView(R.id.landmark)
+        TextView landmark;
+        @BindView(R.id.ll_address)
+        LinearLayout ll_address;
+        @BindView(R.id.view_address)
+        TextView viewAdress;
+        @BindView(R.id.address_dropdown)
+        TextView address_dropdown;
+        @BindView(R.id.drop_img)
+        ImageView dropImg;
+        @BindView(R.id.drop_img1)
+        ImageView dropImg1;
+
 
 
 
