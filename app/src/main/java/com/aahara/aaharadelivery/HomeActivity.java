@@ -49,18 +49,13 @@ import static java.security.AccessController.getContext;
 
 public class HomeActivity extends AppCompatActivity implements AlertDailog, View.OnClickListener {
 
-
     private boolean isExpandedOrderList = true;
-
     private RecyclerView rvHistory;
     private HistoryAdapter historyAdaptar;
     private ArrayList<HistoryModel> historyModelArrayList = new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager, layoutManager1;
     private ArrayList<OrderBean> orderBeanList = new ArrayList<>();
-    static final private int DELAY_TIME = 10*1000;
     List<String> orderList = new ArrayList<String>();
-
-
     private TextView address;
     TextView tvOrderSpinner, tvHistory, tv_location, logout;
 
@@ -75,17 +70,16 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
     ArrayList<DeliveryBean.Order> deliveryBeans = new ArrayList<>();
     ArrayList<DeliveryBean.Item> deliveryBeansitem = new ArrayList<>();
     private UserSessionManager session;
+    public Handler handler;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         session = new UserSessionManager(getApplicationContext());
         accesss_token = session.getUserDetails().get(UserSessionManager.KEY_accessToken);
         Log.d("accesss_token", accesss_token.toString());
-
         rvHistory = (RecyclerView) findViewById(R.id.rv_history);
         tvHistory = (TextView) findViewById(R.id.history);
         logout = (TextView) findViewById(R.id.logout);
@@ -93,6 +87,7 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
         tvHistory.setOnClickListener(this);
 
         callApi();
+        doTheAutoRefresh();
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -102,30 +97,27 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
             }
         });
     }
-/////////*************content refresh for every 30 second
-
-//    // create a handler that points to the UI Thread's Looper
-//    private Handler handler = new Handler(Looper.getMainLooper());
-//
-//private Runnable runnable = new Runnable() {
-//    @Override
-//    public void run() {
-//        /* do what you need to do */
-//      callApi();
-//        /* post new handler to re-trigger in 30 seconds */
-//        // wrap this in IF statement to make a way of stopping the looping.
-//        handler.postDelayed(this, DELAY_TIME );
-//        // post the first runnable, that will start a cascading repeat set of runnables
-//        handler.postDelayed(runnable, DELAY_TIME );
-//    }
-//};
 
 
-    ////////////////////////////////////////////
+    //*************content refresh for every 50 seconds************
+
+
+
+    private void doTheAutoRefresh() {
+        handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                callApi();
+                doTheAutoRefresh();
+            }
+        }, 50000);
+    }
+
+
     @Override
     public void alertdailog(int position, DeliveryBean.Order deliveryBean) {
         ViewGroup viewGroup = findViewById(android.R.id.content);
-
         //then we will inflate the custom alert dialog xml that we created
         View dialogView = LayoutInflater.from(this).inflate(R.layout.popup_address, viewGroup, false);
         // Button btn = (Button) dialogView.findViewById(R.id.btn_done);
@@ -147,13 +139,10 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
         final AlertDialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
-
-
     }
 
     @Override
     public void spinnerList(int position, String item) {
-
     }
 
 
