@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +57,7 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
     private ArrayList<HistoryModel> historyModelArrayList = new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager, layoutManager1;
     private ArrayList<OrderBean> orderBeanList = new ArrayList<>();
-
+    static final private int DELAY_TIME = 10*1000;
     List<String> orderList = new ArrayList<String>();
 
 
@@ -100,7 +102,26 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
             }
         });
     }
+/////////*************content refresh for every 30 second
 
+//    // create a handler that points to the UI Thread's Looper
+//    private Handler handler = new Handler(Looper.getMainLooper());
+//
+//private Runnable runnable = new Runnable() {
+//    @Override
+//    public void run() {
+//        /* do what you need to do */
+//      callApi();
+//        /* post new handler to re-trigger in 30 seconds */
+//        // wrap this in IF statement to make a way of stopping the looping.
+//        handler.postDelayed(this, DELAY_TIME );
+//        // post the first runnable, that will start a cascading repeat set of runnables
+//        handler.postDelayed(runnable, DELAY_TIME );
+//    }
+//};
+
+
+    ////////////////////////////////////////////
     @Override
     public void alertdailog(int position, DeliveryBean.Order deliveryBean) {
         ViewGroup viewGroup = findViewById(android.R.id.content);
@@ -187,6 +208,9 @@ public class HomeActivity extends AppCompatActivity implements AlertDailog, View
                     try {
                         String error_message = response.errorBody().string();
                         JSONObject jObjError = new JSONObject(error_message);
+                        ArrayList<DeliveryBean.Order> order = new ArrayList<>();
+                        initializeRecyclerView(order);
+
                         //   showToast(getApplicationContext(), jObjError.getString("message"));
 
                     } catch (JSONException e) {
