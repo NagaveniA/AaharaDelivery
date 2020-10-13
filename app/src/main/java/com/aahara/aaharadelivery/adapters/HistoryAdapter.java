@@ -1,7 +1,9 @@
 package com.aahara.aaharadelivery.adapters;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +44,7 @@ import butterknife.OnClick;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder> {
     private Context context,mcontext;
+    private static final int MY_PERMISSIONS = 1;
     ArrayList<OrderItemListModel> model = new ArrayList<>();
 
     public HistoryAdapter(ArrayList<OrderItemListModel> model,Context mcontext) {
@@ -152,6 +156,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
             }
         } );
+
+        holder.tvLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:" + holder.tvLocation.getText().toString()));
+                         v.getContext().startActivity(intent);
+
+            }
+        });
 
     }
 

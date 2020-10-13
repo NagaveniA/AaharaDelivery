@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "989928786708",
+    "firebase_url": "https://aahara-delivery-app.firebaseio.com",
+    "project_id": "aahara-delivery-app",
+    "storage_bucket": "aahara-delivery-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989928786708:android:b50e88931a4551fa1a1001",
+        "android_client_info": {
+          "package_name": "com.aahara.aaharadelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989928786708-evr5ss1gv6ilo4mqhf7u59cdjbuud7ea.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfKmxAHq-5T9mrdg2uNyc4Al1bUsxVy_w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989928786708-evr5ss1gv6ilo4mqhf7u59cdjbuud7ea.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

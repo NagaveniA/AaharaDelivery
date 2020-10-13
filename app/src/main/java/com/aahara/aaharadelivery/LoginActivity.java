@@ -1,10 +1,14 @@
 package com.aahara.aaharadelivery;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -20,6 +24,12 @@ import com.aahara.aaharadelivery.Model.LoginBean;
 import com.aahara.aaharadelivery.NetworkUtils.Api;
 import com.aahara.aaharadelivery.NetworkUtils.ApiClient;
 import com.aahara.aaharadelivery.SessionManagers.UserSessionManager;
+import com.aahara.aaharadelivery.app.Config;
+import com.aahara.aaharadelivery.utilities.NotificationUtils;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;
@@ -55,6 +65,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ProgressDialog loading;
     private Context context;
     UserSessionManager session;
+    private static final String TAG = LoginActivity.class.getSimpleName();
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    String deviceToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         textWatcher();
         session = new UserSessionManager(getApplicationContext());
-
+        firebse_push_notification();
 
     }
 
@@ -80,6 +93,67 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         im_login = (ImageView) findViewById(R.id.login);
         im_login.setOnClickListener(this);
+    }
+
+    private void firebse_push_notification() {
+        /////firebase setup
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                deviceToken = instanceIdResult.getToken();
+                Log.e("deviceToken", deviceToken);
+                // Saving reg id to shared preferences
+                storeRegIdInPref(deviceToken);
+
+                // sending reg id to your server
+                sendRegistrationToServer(deviceToken);
+            }
+        });
+
+
+        // txtRegId = (TextView) findViewById(R.id.txt_reg_id);
+        //  txtMessage = (TextView) findViewById(R.id.txt_push_message);
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                // checking for type intent filter
+                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+                    // gcm successfully registered
+                    // now subscribe to `global` topic to receive app wide notifications
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+
+                    displayFirebaseRegId();
+
+                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                    // new push notification is received
+
+                    String message = intent.getStringExtra("message");
+
+                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+
+                    // txtMessage.setText(message);
+                }
+            }
+        };
+
+        displayFirebaseRegId();
+
+    }
+    private void displayFirebaseRegId() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        String regId = pref.getString("regId", null);
+
+        Log.e(TAG, "Firebase reg id: " + regId);
+
+        if (!TextUtils.isEmpty(regId)) {
+            // txtRegId.setText("Firebase Reg Id: " + regId);
+        } else {
+            // txtRegId.setText("Firebase Reg Id is not received yet!");
+        }
+
     }
 
     private boolean validate() {
@@ -146,6 +220,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         JsonObject body = new JsonObject();
         body.addProperty("email_mobile", et_email.getText().toString());
         body.addProperty("password", et_password.getText().toString());
+        body.addProperty("device_token", deviceToken);
         loading = ProgressDialog.show(this, "Signing In.....", "wait....", false, false);
         Call<LoginBean> call = api.deliveryboySingin("application/json", body);
         call.enqueue(new Callback<LoginBean>() {
@@ -205,5 +280,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void sendRegistrationToServer(final String token) {
+        // sending gcm token to server
+        Log.e(TAG, "sendRegistrationToServer: " + token);
+    }
 
+    private void storeRegIdInPref(String token) {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("regId", token);
+        editor.commit();
+        Log.e(TAG, "leaving shared preference: " + token);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register GCM registration complete receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Config.REGISTRATION_COMPLETE));
+
+        // register new push message receiver
+        // by doing this, the activity will be notified each time a new message arrives
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Config.PUSH_NOTIFICATION));
+
+        // clear the notification area when the app is opened
+        NotificationUtils.clearNotifications(getApplicationContext());
+    }
 }
