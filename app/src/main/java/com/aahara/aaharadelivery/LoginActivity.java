@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ButterKnife.bind(this);
         session = new UserSessionManager(getApplicationContext());
         if (session.isUserLoggedIn()) {
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
@@ -232,7 +232,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Intent i;
                     session.createUserLoginSession(response.body().getData().getAccessToken());
                     Log.e("access_token", loginBean.getData().getAccessToken());
-                    i = new Intent(LoginActivity.this, HomeActivity.class);
+                    i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);
                     finish();
 

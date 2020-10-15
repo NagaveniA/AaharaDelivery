@@ -1,29 +1,49 @@
 package com.aahara.aaharadelivery.Model;
 
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DeliveryBean implements Serializable
-{
 
-
+public class OrderHistoryBean implements Serializable {
 
     @SerializedName("order")
     @Expose
-    private List<Order> order = null;
-    private final static long serialVersionUID = 9161165426489371856L;
+    private ArrayList<Order> order = null;
 
-    public List<Order> getOrder() {
+    public ArrayList<Order> getOrder() {
         return order;
     }
 
-    public void setOrder(List<Order> order) {
+    public void setOrder(ArrayList<Order> order) {
         this.order = order;
     }
+    @SerializedName("status")
+    @Expose
+    private Boolean status;
+    @SerializedName("message")
+    @Expose
+    private String message;
 
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
 
     public class Order implements Serializable {
@@ -40,9 +60,6 @@ public class DeliveryBean implements Serializable
         @SerializedName("total_cost")
         @Expose
         private String totalCost;
-        @SerializedName("payable_amount")
-        @Expose
-        private String payableamt;
         @SerializedName("ordered_date")
         @Expose
         private String orderedDate;
@@ -51,27 +68,37 @@ public class DeliveryBean implements Serializable
         private String paymentStatus;
         @SerializedName("address_name")
         @Expose
-        private String addressName;
+        private Object addressName;
         @SerializedName("landmark")
         @Expose
-        private String landmark;
-         @SerializedName("user_mobile")
-         @Expose
-         private String userMobile;
+        private Object landmark;
+        @SerializedName("user_mobile")
+        @Expose
+        private String userMobile;
+        @SerializedName("restuarant_Latitude")
+        @Expose
+        private String restuarantLatitude;
+        @SerializedName("restuarant_Longitude")
+        @Expose
+        private String restuarantLongitude;
         @SerializedName("user_latitude")
         @Expose
-        private String latitude;
+        private Object userLatitude;
         @SerializedName("user_longitude")
         @Expose
-        private String longitude;
-//
+        private Object userLongitude;
         @SerializedName("order_status")
         @Expose
-        private String order_status;
+        private String orderStatus;
+        @SerializedName("Delivery_Charges")
+        @Expose
+        private String deliveryCharges;
+        @SerializedName("payable_amount")
+        @Expose
+        private Integer payableAmount;
         @SerializedName("item")
         @Expose
-        public List<Item> item = null;
-        private final static long serialVersionUID = 9164711073757581355L;
+        private List<Item> item = null;
 
         public String getSkOrderId() {
             return skOrderId;
@@ -97,28 +124,12 @@ public class DeliveryBean implements Serializable
             this.restaurantName = restaurantName;
         }
 
-        public String getOrder_status() {
-            return order_status;
-        }
-
-        public void setOrder_status(String order_status) {
-            this.order_status = order_status;
-        }
-
         public String getTotalCost() {
             return totalCost;
         }
 
         public void setTotalCost(String totalCost) {
             this.totalCost = totalCost;
-        }
-
-        public String getPayableamt() {
-            return payableamt;
-        }
-
-        public void setPayableamt(String payableamt) {
-            this.payableamt = payableamt;
         }
 
         public String getOrderedDate() {
@@ -138,37 +149,20 @@ public class DeliveryBean implements Serializable
         }
 
         public String getAddressName() {
-            return addressName;
+            return (String) addressName;
         }
 
-        public String getLatitude() {
-            return latitude;
-        }
-
-        public void setLatitude(String latitude) {
-            this.latitude = latitude;
-        }
-
-        public String getLongitude() {
-            return longitude;
-        }
-
-        public void setLongitude(String longitude) {
-            this.longitude = longitude;
-        }
-
-        public void setAddressName(String addressName) {
+        public void setAddressName(Object addressName) {
             this.addressName = addressName;
         }
 
         public String getLandmark() {
-            return landmark;
+            return (String) landmark;
         }
 
-        public void setLandmark(String landmark) {
+        public void setLandmark(Object landmark) {
             this.landmark = landmark;
         }
-
 
         public String getUserMobile() {
             return userMobile;
@@ -178,8 +172,63 @@ public class DeliveryBean implements Serializable
             this.userMobile = userMobile;
         }
 
-        public List<Item> getItem() {
+        public String getRestuarantLatitude() {
+            return restuarantLatitude;
+        }
 
+        public void setRestuarantLatitude(String restuarantLatitude) {
+            this.restuarantLatitude = restuarantLatitude;
+        }
+
+        public String getRestuarantLongitude() {
+            return restuarantLongitude;
+        }
+
+        public void setRestuarantLongitude(String restuarantLongitude) {
+            this.restuarantLongitude = restuarantLongitude;
+        }
+
+        public Object getUserLatitude() {
+            return userLatitude;
+        }
+
+        public void setUserLatitude(Object userLatitude) {
+            this.userLatitude = userLatitude;
+        }
+
+        public Object getUserLongitude() {
+            return userLongitude;
+        }
+
+        public void setUserLongitude(Object userLongitude) {
+            this.userLongitude = userLongitude;
+        }
+
+        public String getOrderStatus() {
+            return orderStatus;
+        }
+
+        public void setOrderStatus(String orderStatus) {
+            this.orderStatus = orderStatus;
+        }
+
+        public String getDeliveryCharges() {
+            return deliveryCharges;
+        }
+
+        public void setDeliveryCharges(String deliveryCharges) {
+            this.deliveryCharges = deliveryCharges;
+        }
+
+        public String getPayableAmount() {
+            return String.valueOf(payableAmount);
+        }
+
+        public void setPayableAmount(Integer payableAmount) {
+            this.payableAmount = payableAmount;
+        }
+
+        public List<Item> getItem() {
             return item;
         }
 
@@ -188,8 +237,8 @@ public class DeliveryBean implements Serializable
         }
 
     }
-    public class Item implements Serializable
-    {
+
+    public class Item implements Serializable {
 
         @SerializedName("sk_order_details")
         @Expose
@@ -203,11 +252,9 @@ public class DeliveryBean implements Serializable
         @SerializedName("item_type")
         @Expose
         private String itemType;
-
         @SerializedName("cart_count")
         @Expose
         private String cartCount;
-        private final static long serialVersionUID = 3282934178126067635L;
 
         public String getSkOrderDetails() {
             return skOrderDetails;
@@ -251,9 +298,5 @@ public class DeliveryBean implements Serializable
 
     }
 
+
 }
-
-
-
-
-

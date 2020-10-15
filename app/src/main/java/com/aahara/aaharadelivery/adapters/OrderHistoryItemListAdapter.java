@@ -11,19 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aahara.aaharadelivery.Model.DeliveryBean;
 import com.aahara.aaharadelivery.Model.OrderHistoryBean;
-import com.aahara.aaharadelivery.Model.OrderItemListModel;
 import com.aahara.aaharadelivery.R;
-import com.aahara.aaharadelivery.fragments.HistoryFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderItemListAdapter extends RecyclerView.Adapter<OrderItemListAdapter.MyViewHolder> {
-    List<DeliveryBean.Item> delivaryBeamListItem = new ArrayList<>();
+public class OrderHistoryItemListAdapter extends RecyclerView.Adapter<OrderHistoryItemListAdapter.MyViewHolder> {
+    List<OrderHistoryBean.Item> delivaryBeamListItem = new ArrayList<>();
 
     Context context;
 
-    public OrderItemListAdapter(List<DeliveryBean.Item> delivaryBeanItemList,Context mcontext)
+    public OrderHistoryItemListAdapter(List<OrderHistoryBean.Item> delivaryBeanItemList, Context mcontext)
     {
         this.delivaryBeamListItem = delivaryBeanItemList;
         this.context = mcontext;
@@ -32,7 +30,7 @@ public class OrderItemListAdapter extends RecyclerView.Adapter<OrderItemListAdap
 
     @NonNull
     @Override
-    public OrderItemListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OrderHistoryItemListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View v =  layoutInflater.inflate(R.layout.layout_order_item_list,parent,false);
@@ -40,7 +38,7 @@ public class OrderItemListAdapter extends RecyclerView.Adapter<OrderItemListAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OrderItemListAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull OrderHistoryItemListAdapter.MyViewHolder holder, int position) {
         holder.cartcount.setText(delivaryBeamListItem.get(position).getCartCount());
         holder.item_name.setText(delivaryBeamListItem.get(position).getItemName());
         if(position==getItemCount()-1)

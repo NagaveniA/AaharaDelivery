@@ -1,9 +1,7 @@
 package com.aahara.aaharadelivery.adapters;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -14,54 +12,46 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import com.aahara.aaharadelivery.History;
-import com.aahara.aaharadelivery.HomeActivity;
-import com.aahara.aaharadelivery.Interface.AlertDailog;
 import com.aahara.aaharadelivery.Model.DeliveryBean;
 import com.aahara.aaharadelivery.Model.OrderItemListModel;
 import com.aahara.aaharadelivery.R;
-import com.aahara.aaharadelivery.google_map.MapsActivity;
+import com.aahara.aaharadelivery.fragments.HomeFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder> {
     private Context context,mcontext;
     private static final int MY_PERMISSIONS = 1;
     ArrayList<OrderItemListModel> model = new ArrayList<>();
-
-    public HistoryAdapter(ArrayList<OrderItemListModel> model,Context mcontext) {
-        this.model = model;
-        this.mcontext = mcontext;
-    }
+    HomeFragment home;
+//    public HistoryAdapter(ArrayList<OrderItemListModel> model, Context mcontext) {
+//        this.model = model;
+//        this.mcontext = mcontext;
+//    }
 
     private List<DeliveryBean.Order> deliveryBeanList = new ArrayList<>(  );
     private List<DeliveryBean.Item> delivaryBeamListItem = new ArrayList<>();
-    AlertDailog mcallBack;
-    ArrayAdapter<String>  dataAdapter;
-    HomeActivity home;
-    public HistoryAdapter(Context context, List<DeliveryBean.Order> deliveryBeanList, AlertDailog mcallBack, HomeActivity home) {
+
+    ArrayAdapter<String> dataAdapter;
+
+
+    public HistoryAdapter(Context context, List<DeliveryBean.Order> deliveryBeanList, HomeFragment h) {
         this.context = context;
         this.deliveryBeanList = deliveryBeanList;
-        this.mcallBack = mcallBack;
-        this.home = home;
+        this.home = h;
     }
 
 
@@ -73,7 +63,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         DeliveryBean.Order deliveryBean = deliveryBeanList.get( position );
         holder.tvShopName.setText( deliveryBean.getRestaurantName() );
         holder.landmark.setText( deliveryBean.getLandmark() );
@@ -82,21 +72,21 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         holder.tvLatitude.setText( deliveryBean.getLatitude());
         holder.viewAdress.setText(deliveryBean.getAddressName());
         holder.tvOrderedOn.setText( deliveryBean.getOrderedDate() );
-        holder.tvTotalAmount.setText( deliveryBean.getTotalCost() );
+        holder.tvTotalAmount.setText( deliveryBean.getPayableamt() );
 
         ////
         holder.address_dropdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                // boolean click_event = false;
-                if(holder.ll_address.getVisibility()==View.GONE){
+                if(holder.ll_address.getVisibility()== View.GONE){
                     holder.ll_address.setVisibility(View.VISIBLE);
                     holder.dropImg1.setVisibility(View.GONE);
 
                     holder.dropImg.setImageResource(R.drawable.ic_arrow_drop_up_24);
 
                 }
-                else if(holder.ll_address.getVisibility()==View.VISIBLE)
+                else if(holder.ll_address.getVisibility()== View.VISIBLE)
                 {
                     holder.ll_address.setVisibility(View.GONE);
                     holder.dropImg.setImageResource(R.drawable.ic_arrow_drop_down_24);
@@ -105,7 +95,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             }
         });
         ///
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mcontext,LinearLayoutManager.HORIZONTAL,false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mcontext, LinearLayoutManager.HORIZONTAL,false);
         holder.items_recycler.setLayoutManager(layoutManager);
         OrderItemListAdapter orderItemListAdapter = new OrderItemListAdapter(deliveryBean.getItem(),mcontext);
 
@@ -139,6 +129,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
                 String order_no = holder.order_id.getText().toString();
 
                  if(item == "delivered"){
+
                     home.callApi1( position,item ,order_no);
                     home.callApi();
                     }
@@ -194,7 +185,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 //        @BindView(R.id.tv_items)
 //        TextView tvItems;
         @BindView(R.id.tv_latitude)
-        TextView tvLatitude;
+TextView tvLatitude;
         @BindView(R.id.tv_longitude)
         TextView tvLongitude;
         @BindView(R.id.tv_order_status)
@@ -210,7 +201,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 //        @BindView(R.id.address)
 //        TextView tvAddress;
         @BindView(R.id.address)
-        Button address;
+Button address;
         @BindView(R.id.tv_orderId)
         TextView order_id;
         @BindView(R.id.landmark)
@@ -232,13 +223,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         public MyViewHolder(@NonNull View itemView) {
             super( itemView );
             ButterKnife.bind( this, itemView );
-            items_recycler  = itemView.findViewById(R.id.itemsRecycler);
+//            items_recycler  = itemView.findViewById(R.id.itemsRecycler);
             address.setOnClickListener( this );
 
         }
-
-
-        @OnClick({R.id.address})
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();

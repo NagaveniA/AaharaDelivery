@@ -3,6 +3,7 @@ package com.aahara.aaharadelivery.NetworkUtils;
 
 import com.aahara.aaharadelivery.Model.DeliveryBean;
 import com.aahara.aaharadelivery.Model.LoginBean;
+import com.aahara.aaharadelivery.Model.OrderHistoryBean;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
@@ -21,6 +22,9 @@ public interface Api {
 
     @GET("deliveryList")
     Call<ServerResponse<DeliveryBean>>getdeliveryList(@Header("Accesstoken") String access_token);
+
+    @POST("ordersByDeliveryboy")
+    Call<ServerResponse<OrderHistoryBean>>getOrderHistoryList(@Header("Accesstoken") String access_token);
 
 
     @POST("updateDelivaryStatus")
